@@ -2114,7 +2114,7 @@ def _signature_strip_non_python_syntax(signature):
 
     self_parameter = None
 
-    lines = [l.encode('ascii') for l in signature.split('\n') if l]
+    lines = [l.encode('utf-8') for l in signature.split('\n') if l]
     generator = iter(lines).__next__
     token_stream = tokenize.tokenize(generator)
 

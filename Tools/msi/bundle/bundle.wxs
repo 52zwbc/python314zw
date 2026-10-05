@@ -28,9 +28,9 @@
 
     <Variable Name="InstallAllUsers" Value="0" bal:Overridable="yes" />
     <?if "$(var.PyTestExt)"="" ?>
-    <Variable Name="InstallLauncherAllUsers" Value="-1" bal:Overridable="yes" />
+    <Variable Name="InstallLauncherAllUsers" Value="1" bal:Overridable="yes" />
     <?else ?>
-    <Variable Name="InstallLauncherAllUsers" Value="-1" />
+    <Variable Name="InstallLauncherAllUsers" Value="1" />
     <?endif ?>
 
     <Variable Name="TargetDir" Value="" bal:Overridable="yes" />
@@ -98,7 +98,7 @@
 
     <Variable Name="AssociateFiles" Value="-1" bal:Overridable="yes" />
     <Variable Name="Shortcuts" Value="1" bal:Overridable="yes" />
-    <Variable Name="PrependPath" Value="0" bal:Overridable="yes" />
+    <Variable Name="PrependPath" Value="1" bal:Overridable="yes" />
     <Variable Name="AppendPath" Value="0" bal:Overridable="yes" />
     <Variable Name="CompileAll" Value="0" bal:Overridable="yes" />
 

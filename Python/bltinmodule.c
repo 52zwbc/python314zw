@@ -2314,6 +2314,91 @@ builtin_print_impl(PyObject *module, PyObject * const *args,
     Py_RETURN_NONE;
 }
 
+/* 中文别名: 打印(*值, 分隔=' ', 结尾='\n', 文件=None, 刷新=False)，功能与 print 相同 */
+PyDoc_STRVAR(builtin_dayin__doc__,
+"打印(*值, 分隔=' ', 结尾='\\n', 文件=None, 刷新=False)\n"
+"--\n"
+"\n"
+"将值打印到流，默认打印到 sys.stdout。\n"
+"\n"
+"  值\n"
+"    要打印的一个或多个对象。\n"
+"  分隔 (sep)\n"
+"    输出各值之间插入的字符串，默认为一个空格。\n"
+"  结尾 (end)\n"
+"    输出最后一个值后追加的字符串，默认为换行。\n"
+"  文件 (file)\n"
+"    类文件对象（流）；默认为当前的 sys.stdout。\n"
+"  刷新 (flush)\n"
+"    是否强制刷新流。\n"
+"\n"
+"英文关键字 sep/end/file/flush 也同样可用，便于过渡学习。");
+
+static PyObject *
+builtin_dayin(PyObject *module, PyObject *const *args, Py_ssize_t nargs,
+              PyObject *kwnames)
+{
+    PyObject *sep = Py_None, *end = Py_None, *file = Py_None;
+    int flush = 0;
+    int sep_set = 0, end_set = 0, file_set = 0, flush_set = 0;
+    Py_ssize_t nkw = (kwnames == NULL) ? 0 : PyTuple_GET_SIZE(kwnames);
+    Py_ssize_t i;
+
+    for (i = 0; i < nkw; i++) {
+        PyObject *key = PyTuple_GET_ITEM(kwnames, i);
+        PyObject *val = args[nargs + i];
+        const char *name = PyUnicode_AsUTF8(key);
+        if (name == NULL) {
+            return NULL;
+        }
+        if (strcmp(name, "分隔") == 0 || strcmp(name, "sep") == 0) {
+            if (sep_set) {
+                PyErr_Format(PyExc_TypeError,
+                             "got multiple values for keyword argument '%s'", name);
+                return NULL;
+            }
+            sep_set = 1;
+            sep = val;
+        }
+        else if (strcmp(name, "结尾") == 0 || strcmp(name, "end") == 0) {
+            if (end_set) {
+                PyErr_Format(PyExc_TypeError,
+                             "got multiple values for keyword argument '%s'", name);
+                return NULL;
+            }
+            end_set = 1;
+            end = val;
+        }
+        else if (strcmp(name, "文件") == 0 || strcmp(name, "file") == 0) {
+            if (file_set) {
+                PyErr_Format(PyExc_TypeError,
+                             "got multiple values for keyword argument '%s'", name);
+                return NULL;
+            }
+            file_set = 1;
+            file = val;
+        }
+        else if (strcmp(name, "刷新") == 0 || strcmp(name, "flush") == 0) {
+            if (flush_set) {
+                PyErr_Format(PyExc_TypeError,
+                             "got multiple values for keyword argument '%s'", name);
+                return NULL;
+            }
+            flush_set = 1;
+            flush = PyObject_IsTrue(val);
+            if (flush < 0) {
+                return NULL;
+            }
+        }
+        else {
+            PyErr_Format(PyExc_TypeError,
+                         "unsupported keyword argument '%S'", key);
+            return NULL;
+        }
+    }
+    return builtin_print_impl(module, args, nargs, sep, end, file, flush);
+}
+
 
 /*[clinic input]
 input as builtin_input
@@ -3396,7 +3481,7 @@ static PyMethodDef builtin_methods[] = {
     BUILTIN_ORD_METHODDEF
     BUILTIN_POW_METHODDEF
     BUILTIN_PRINT_METHODDEF
-    {"打印", _PyCFunction_CAST(builtin_print), METH_FASTCALL|METH_KEYWORDS, builtin_print__doc__},
+    {"打印", _PyCFunction_CAST(builtin_dayin), METH_FASTCALL|METH_KEYWORDS, builtin_dayin__doc__},
     BUILTIN_REPR_METHODDEF
     BUILTIN_ROUND_METHODDEF
     BUILTIN_SETATTR_METHODDEF
