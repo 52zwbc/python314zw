@@ -165,6 +165,18 @@ _get_keyword_or_name_type(Parser *p, struct token *new_token)
     Py_ssize_t name_len = new_token->end_col_offset - new_token->col_offset;
     assert(name_len > 0);
 
+    /* 中文关键字别名: "如果" (UTF-8 6 字节) 与 "if" 等价 */
+    if (name_len == 6 && new_token->start != NULL &&
+        memcmp(new_token->start, "如果", 6) == 0) {
+        for (int i = 0; i < p->n_keyword_lists; i++) {
+            for (KeywordToken *k = p->keywords[i]; k != NULL && k->type != -1; k++) {
+                if (strcmp(k->str, "if") == 0) {
+                    return k->type;
+                }
+            }
+        }
+    }
+
     if (name_len >= p->n_keyword_lists ||
         p->keywords[name_len] == NULL ||
         p->keywords[name_len]->type == -1) {
