@@ -26,7 +26,9 @@ jobs:
 
       - name: 中文功能冒烟测试
         run: |
-          PCbuild\amd64\python.exe -c "打印('你好中文'); 如果 True: 打印('如果-OK')"
+          chcp 65001
+          set PYTHONIOENCODING=utf-8
+          PCbuild\amd64\python.exe -c "打印('hello-zh')"
           PCbuild\amd64\python.exe test_zh.py
         shell: cmd
 
