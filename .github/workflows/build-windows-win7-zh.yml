@@ -35,7 +35,7 @@ jobs:
             win7_exe: python-3.14.8-win7.exe
             artifact: python314zw-win7-x86
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
