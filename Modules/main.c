@@ -389,6 +389,40 @@ pymain_run_module(const wchar_t *modname, int set_argv0)
 }
 
 
+/* 中文定制: 运行 .py 文件前先打印一行宣传语,再空一行输出脚本结果。
+   使用 sys.stdout 的 TextIOWrapper 编码(GBK/UTF-8 自适应),避免 Win 中文
+   控制台乱码;失败时静默忽略,不影响脚本执行。 */
+static void
+pymain_print_zh_banner(void)
+{
+    PyObject *stdout_obj = PySys_GetObject("stdout");
+    if (stdout_obj == NULL) {
+        return;
+    }
+    const char *banner =
+        "中文python，查看帮助请搜索微信小程序《52中文编程》"
+        "或访问网站 https://www.52zwbc.com 。"
+        "（微信号sdglsdwx）。宁阳风景秀美，欢迎来宁阳游玩。";
+    PyObject *text = PyUnicode_FromString(banner);
+    if (text == NULL) {
+        PyErr_Clear();
+        return;
+    }
+    if (PyFile_WriteObject(text, stdout_obj, Py_PRINT_RAW) < 0) {
+        PyErr_Clear();
+        Py_DECREF(text);
+        return;
+    }
+    Py_DECREF(text);
+    /* 文字和脚本输出之间空一行 */
+    if (PyFile_WriteString("\n\n", stdout_obj) < 0) {
+        PyErr_Clear();
+        return;
+    }
+    PyObject *flush_res = PyObject_CallMethod(stdout_obj, "flush", NULL);
+    Py_XDECREF(flush_res);
+}
+
 static int
 pymain_run_file_obj(PyObject *program_name, PyObject *filename,
                     int skip_source_first_line)
@@ -430,6 +464,9 @@ pymain_run_file_obj(PyObject *program_name, PyObject *filename,
         fclose(fp);
         return pymain_exit_err_print();
     }
+
+    /* 中文定制横幅:先输出宣传语+空行,再跑脚本正文 */
+    pymain_print_zh_banner();
 
     /* _PyRun_AnyFile(closeit=1) calls fclose(fp) before running code */
     PyCompilerFlags cf = _PyCompilerFlags_INIT;

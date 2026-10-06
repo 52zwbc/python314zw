@@ -30,6 +30,11 @@ jobs:
           set PYTHONIOENCODING=utf-8
           PCbuild\amd64\python.exe -c "打印('hello-zh')"
           PCbuild\amd64\python.exe test_zh.py
+          echo 打印("banner-ok")> banner_check.py
+          PCbuild\amd64\python.exe banner_check.py > banner_out.txt
+          type banner_out.txt
+          findstr /C:"中文python" banner_out.txt
+          findstr /C:"52zwbc.com" banner_out.txt
         shell: cmd
 
       - name: Build Windows installer (x64, 中文默认勾选PATH)
@@ -37,18 +42,20 @@ jobs:
         shell: cmd
 
       - name: List outputs
-        run: dir dist
+        run: |
+          dir dist
+          dir dist\amd64
         shell: cmd
 
       - name: Upload installer artifact
         uses: actions/upload-artifact@v4
         with:
           name: python314zw-win64
-          path: dist\*
+          path: dist/**/*
 
       - name: Publish to GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/*
+          files: dist/**/*
           generate_release_notes: true

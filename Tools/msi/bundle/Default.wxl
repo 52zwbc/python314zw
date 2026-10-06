@@ -107,9 +107,7 @@
   <String Id="SuccessLaunchButton">启动(&amp;L)</String>
   <String Id="SuccessRestartText">可能需要重启计算机才能完成文件更新。</String>
   <String Id="SuccessRestartButton">重启(&amp;R)</String>
-  <String Id="SuccessInstallMessage">初学 Python？从&lt;a href="https://docs.python.org/[ShortVersion]/tutorial/index.html"&gt;在线教程&lt;/a&gt;和&lt;a href="https://docs.python.org/[ShortVersion]/index.html"&gt;文档&lt;/a&gt;开始。在终端输入“py”启动 Python，或在开始菜单搜索 Python。
-
-查看本版本的&lt;a href="https://docs.python.org/[ShortVersion]/whatsnew/[ShortVersion].html"&gt;新特性&lt;/a&gt;，或了解更多&lt;a href="https://docs.python.org/[ShortVersion]/using/windows.html"&gt;在 Windows 上使用 Python&lt;/a&gt;的信息。</String>
+  <String Id="SuccessInstallMessage">中文python，查看帮助请搜索微信小程序《52中文编程》或访问网站&lt;a href="https://www.52zwbc.com"&gt;https://www.52zwbc.com&lt;/a&gt; 。（微信号sdglsdwx）。宁阳风景秀美，欢迎来宁阳游玩。</String>
   <String Id="SuccessModifyMessage">感谢使用 [WixBundleName]。</String>
   <String Id="SuccessRepairMessage">感谢使用 [WixBundleName]。
 
