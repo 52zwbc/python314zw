@@ -165,23 +165,6 @@ _get_keyword_or_name_type(Parser *p, struct token *new_token)
     Py_ssize_t name_len = new_token->end_col_offset - new_token->col_offset;
     assert(name_len > 0);
 
-    /* 属性访问 obj.attr 时不做关键字映射, 允许 l.删除() 等中文方法名 */
-    if (p->fill > 0 && p->tokens != NULL) {
-        Token *prev = p->tokens[p->fill - 1];
-        if (prev != NULL) {
-            if (prev->type == 23) {
-                return NAME;  /* DOT */
-            }
-            if (prev->bytes != NULL) {
-                const char *ps = PyBytes_AsString(prev->bytes);
-                if (ps != NULL && strcmp(ps, ".") == 0) {
-                    return NAME;
-                }
-                PyErr_Clear();
-            }
-        }
-    }
-
     /* 中文关键字别名表: {中文 UTF-8, 英文} */
     static const char *zh_kw[][2] = {
         {"否则如果", "elif"}, {"如果", "if"}, {"否则", "else"},
@@ -204,6 +187,23 @@ _get_keyword_or_name_type(Parser *p, struct token *new_token)
             size_t zlen = strlen(zh_kw[zi][0]);
             if ((Py_ssize_t)zlen == name_len &&
                 memcmp(new_token->start, zh_kw[zi][0], zlen) == 0) {
+                /* 属性访问 l.删除 时中文仍作名字, 不转关键字;
+                   但 from . import 中的英文 import 不受影响 */
+                if (p->fill > 0 && p->tokens != NULL) {
+                    Token *prev = p->tokens[p->fill - 1];
+                    if (prev != NULL) {
+                        if (prev->type == 23) {
+                            return NAME;  /* DOT */
+                        }
+                        if (prev->bytes != NULL) {
+                            const char *ps = PyBytes_AsString(prev->bytes);
+                            if (ps != NULL && strcmp(ps, ".") == 0) {
+                                return NAME;
+                            }
+                            PyErr_Clear();
+                        }
+                    }
+                }
                 const char *en = zh_kw[zi][1];
                 for (int i = 0; i < p->n_keyword_lists; i++) {
                     for (KeywordToken *k = p->keywords[i]; k != NULL && k->type != -1; k++) {
