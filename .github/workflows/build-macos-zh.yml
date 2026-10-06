@@ -16,7 +16,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: 构建macOS universal2安装包(官方build-installer流程)
-        run: python3 Mac/BuildScript/build-installer.py --universal-archs=universal2
+        run: |
+          mkdir -p ~/Universal/other-sources
+          python3 Mac/BuildScript/build-installer.py --universal-archs=universal2
 
       - name: 安装并中文冒烟测试
         run: |
