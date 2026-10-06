@@ -6288,7 +6288,8 @@ class TestSignatureDefinitions(unittest.TestCase):
     def test_time_module_has_signatures(self):
         no_signature = {
             'asctime', 'ctime', 'get_clock_info', 'gmtime', 'localtime',
-            'strftime', 'strptime'
+            'strftime', 'strptime',
+            '本地时间', '格林威治时间', '格式化', '解析',
         }
         no_signature |= {name for name in
             ['clock_getres', 'clock_settime', 'clock_settime_ns',

@@ -81,6 +81,10 @@ def _make_wrapper(en_func, zh_name, zh2en):
     wrapper.__name__ = zh_name
     wrapper.__qualname__ = zh_name
     try:
+        wrapper.__module__ = "builtins"
+    except Exception:
+        pass
+    try:
         wrapper.__doc__ = getattr(en_func, "__doc__", None)
     except Exception:
         pass
@@ -128,6 +132,41 @@ for _zh, _en in _ALIASES.items():
 
 try:
     setattr(_B, "打开", 打开)
+except Exception:
+    pass
+
+# 英文 open 默认编码也改为 utf-8(便于多国语言; 二进制模式不受影响)
+try:
+    _orig_open_en = _B.open
+    class _OpenWrapperEn:
+        def __init__(self, orig):
+            self._orig = orig
+            try:
+                self.__doc__ = orig.__doc__
+            except Exception:
+                pass
+            try:
+                self.__name__ = "open"
+            except Exception:
+                pass
+            try:
+                self.__module__ = "builtins"
+            except Exception:
+                pass
+        def __call__(self, file, mode="r", buffering=-1, encoding=None,
+                     errors=None, newline=None, closefd=True, opener=None):
+            if encoding is None and isinstance(mode, str) and "b" not in mode:
+                encoding = "utf-8"
+            return self._orig(file, mode, buffering, encoding, errors,
+                              newline, closefd, opener)
+    _B.open = _OpenWrapperEn(_orig_open_en)
+except Exception:
+    pass
+
+# 标准库中文别名懒加载
+try:
+    import _zh_stdlib
+    _zh_stdlib.install()
 except Exception:
     pass
 # 退出: site.setquit() 后才有 quit/exit, 此处尽力别名

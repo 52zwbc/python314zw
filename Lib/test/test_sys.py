@@ -2263,7 +2263,8 @@ raise Exception("Remote script exception")
         returncode, stdout, stderr = self._run_remote_exec_test(script)
         self.assertEqual(returncode, 0)
         self.assertIn(b"Remote script exception", stderr)
-        self.assertEqual(stdout.strip(), b"Target process running...")
+        # 中文版py文件执行会先输出一行宣传语, 此处仅断言包含
+        self.assertIn(b"Target process running...", stdout)
 
     def test_new_namespace_for_each_remote_exec(self):
         """Test that each remote_exec call gets its own namespace."""
@@ -2310,7 +2311,8 @@ this is invalid python code
         returncode, stdout, stderr = self._run_remote_exec_test(script)
         self.assertEqual(returncode, 0)
         self.assertIn(b"SyntaxError", stderr)
-        self.assertEqual(stdout.strip(), b"Target process running...")
+        # 中文版py文件执行会先输出一行宣传语, 此处仅断言包含
+        self.assertIn(b"Target process running...", stdout)
 
     def test_remote_exec_invalid_script_path(self):
         """Test remote exec with invalid script path"""

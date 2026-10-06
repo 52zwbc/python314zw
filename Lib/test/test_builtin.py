@@ -1715,7 +1715,8 @@ class BuiltinTest(ComplexesAreIdenticalMixin, unittest.TestCase):
                 warnings.simplefilter("ignore", EncodingWarning)
                 fp = open(TESTFN, 'w')
             with fp:
-                self.assertEqual(fp.encoding, current_locale_encoding)
+                # 中文版默认编码改为 utf-8(便于多国语言)
+                self.assertEqual(fp.encoding.lower().replace('-', ''), 'utf8')
 
     @support.requires_subprocess()
     def test_open_non_inheritable(self):

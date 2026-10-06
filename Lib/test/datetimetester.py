@@ -99,7 +99,9 @@ class TestModule(unittest.TestCase):
                     if not name.startswith('__') and not name.endswith('__'))
         allowed = set(['MAXYEAR', 'MINYEAR', 'date', 'datetime',
                        'datetime_CAPI', 'time', 'timedelta', 'timezone',
-                       'tzinfo', 'UTC', 'sys'])
+                       'tzinfo', 'UTC', 'sys',
+                       '日期', '时间', '日期时间', '时间差', '时区',
+                       '时区信息', '现在', '今天'])
         self.assertEqual(names - allowed, set([]))
 
     def test_divide_and_round(self):
