@@ -285,9 +285,19 @@ def library_recipes():
               ],
               useLDFlags=False,
               buildrecipe=tweak_tcl_build,
-              install='make TCL_LIBRARY=%(TCL_LIBRARY)s && make install TCL_LIBRARY=%(TCL_LIBRARY)s DESTDIR=%(DESTDIR)s'%{
+              install=('make TCL_LIBRARY=%(TCL_LIBRARY)s'
+                       ' && make install TCL_LIBRARY=%(TCL_LIBRARY)s DESTDIR=%(DESTDIR)s'
+                       # Tk 9 的 configure 要运行刚编好的 tclsh,而它的 libtcl
+                       # install_name 指向最终 Framework 路径,此时还不存在。
+                       # 把 dylib 预置到最终位置(官方发布机因装过旧版框架而碰巧不缺),
+                       # 否则 Tk configure 报 cannot find a usable native Tcl 9 tclsh。
+                       ' && sudo mkdir -p %(FWLIB)s'
+                       ' && sudo cp %(STAGEDIR)s/libtcl*.dylib %(FWLIB)s/')%{
                   "DESTDIR": shellQuote(os.path.join(WORKDIR, 'libraries')),
                   "TCL_LIBRARY": shellQuote('/Library/Frameworks/Python.framework/Versions/%s/lib/tcl8.6'%(getVersion())),
+                  "FWLIB": shellQuote('/Library/Frameworks/Python.framework/Versions/%s/lib'%(getVersion(),)),
+                  "STAGEDIR": shellQuote(os.path.join(WORKDIR, 'libraries', 'Library', 'Frameworks',
+                                                      'Python.framework', 'Versions', getVersion(), 'lib')),
                   },
               ),
           dict(
