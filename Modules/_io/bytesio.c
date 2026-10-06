@@ -1166,6 +1166,13 @@ static PyGetSetDef bytesio_getsetlist[] = {
     {NULL},            /* sentinel */
 };
 
+/* 中文别名文档(签名与英文一致, 名称为中文) */
+PyDoc_STRVAR(zh_alias_doc_144798_0,
+"读取($self, size=-1, /)\n--\n\n与 read 相同。");
+PyDoc_STRVAR(zh_alias_doc_152140_1,
+"写入($self, b, /)\n--\n\n与 write 相同。");
+PyDoc_STRVAR(zh_alias_doc_74367_2,
+"关闭($self, /)\n--\n\n与 close 相同。");
 static struct PyMethodDef bytesio_methods[] = {
     _IO_BYTESIO_READABLE_METHODDEF
     _IO_BYTESIO_SEEKABLE_METHODDEF
@@ -1185,6 +1192,10 @@ static struct PyMethodDef bytesio_methods[] = {
     _IO_BYTESIO_GETVALUE_METHODDEF
     _IO_BYTESIO_SEEK_METHODDEF
     _IO_BYTESIO_TRUNCATE_METHODDEF
+    /* 中文IO方法: 读取=read, 写入=write, 关闭=close */
+    {"读取", _PyCFunction_CAST(_io_BytesIO_read), METH_FASTCALL, zh_alias_doc_144798_0},
+    {"写入", (PyCFunction)_io_BytesIO_write, METH_O, zh_alias_doc_152140_1},
+    {"关闭", (PyCFunction)_io_BytesIO_close, METH_NOARGS, zh_alias_doc_74367_2},
     {"__getstate__",  bytesio_getstate,  METH_NOARGS, NULL},
     {"__setstate__",  bytesio_setstate,  METH_O, NULL},
     {"__sizeof__", bytesio_sizeof,     METH_NOARGS, NULL},

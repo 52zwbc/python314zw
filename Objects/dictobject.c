@@ -4809,6 +4809,29 @@ In either case, this is followed by: for k in F:  D[k] = F[k]");
 
 /* Forward */
 
+/* 中文别名文档(签名与英文一致, 名称为中文) */
+PyDoc_STRVAR(zh_alias_doc_68008_0,
+"清空($self, /)\n--\n\n与 clear 相同。");
+PyDoc_STRVAR(zh_alias_doc_45006_1,
+"复制($self, /)\n--\n\n与 copy 相同。");
+PyDoc_STRVAR(zh_alias_doc_682154_2,
+"获取键($type, iterable, value=None, /)\n--\n\n与 fromkeys 相同。");
+PyDoc_STRVAR(zh_alias_doc_504930_3,
+"取值($self, key, default=None, /)\n--\n\n与 get 相同。");
+PyDoc_STRVAR(zh_alias_doc_897027_4,
+"键值对($self, /)\n--\n\n与 items 相同。");
+PyDoc_STRVAR(zh_alias_doc_847714_5,
+"所有键($self, /)\n--\n\n与 keys 相同。");
+PyDoc_STRVAR(zh_alias_doc_843521_6,
+"弹出($self, key, default=<unrepresentable>, /)\n--\n\n与 pop 相同。");
+PyDoc_STRVAR(zh_alias_doc_94144_7,
+"删除末尾($self, /)\n--\n\n与 popitem 相同。");
+PyDoc_STRVAR(zh_alias_doc_424974_8,
+"取或添加($self, key, default=None, /)\n--\n\n与 setdefault 相同。");
+PyDoc_STRVAR(zh_alias_doc_97727_9,
+"更新($self, /)\n--\n\n与  相同。");
+PyDoc_STRVAR(zh_alias_doc_570752_10,
+"所有值($self, /)\n--\n\n与 values 相同。");
 static PyMethodDef mapp_methods[] = {
     DICT___CONTAINS___METHODDEF
     {"__getitem__",     dict_subscript,                 METH_O | METH_COEXIST,
@@ -4826,6 +4849,18 @@ static PyMethodDef mapp_methods[] = {
     DICT_FROMKEYS_METHODDEF
     DICT_CLEAR_METHODDEF
     DICT_COPY_METHODDEF
+    /* 中文方法别名 */
+    {"清空", (PyCFunction)dict_clear, METH_NOARGS, zh_alias_doc_68008_0},
+    {"复制", (PyCFunction)dict_copy, METH_NOARGS, zh_alias_doc_45006_1},
+    {"获取键", _PyCFunction_CAST(dict_fromkeys), METH_FASTCALL|METH_CLASS, zh_alias_doc_682154_2},
+    {"取值", _PyCFunction_CAST(dict_get), METH_FASTCALL, zh_alias_doc_504930_3},
+    {"键值对", (PyCFunction)dict_items, METH_NOARGS, zh_alias_doc_897027_4},
+    {"所有键", (PyCFunction)dict_keys, METH_NOARGS, zh_alias_doc_847714_5},
+    {"弹出", _PyCFunction_CAST(dict_pop), METH_FASTCALL, zh_alias_doc_843521_6},
+    {"删除末尾", (PyCFunction)dict_popitem, METH_NOARGS, zh_alias_doc_94144_7},
+    {"取或添加", _PyCFunction_CAST(dict_setdefault), METH_FASTCALL, zh_alias_doc_424974_8},
+    {"更新", _PyCFunction_CAST(dict_update), METH_VARARGS | METH_KEYWORDS, NULL},
+    {"所有值", (PyCFunction)dict_values, METH_NOARGS, zh_alias_doc_570752_10},
     DICT___REVERSED___METHODDEF
     {"__class_getitem__", Py_GenericAlias, METH_O|METH_CLASS,
      PyDoc_STR("dicts are generic over two types, signifying (respectively) the types of their keys and values")},

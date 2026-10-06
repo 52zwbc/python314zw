@@ -3377,6 +3377,13 @@ PyType_Spec nldecoder_spec = {
 };
 
 
+/* 中文别名文档(签名与英文一致, 名称为中文) */
+PyDoc_STRVAR(zh_alias_doc_508763_0,
+"读取($self, size=-1, /)\n--\n\n与 read 相同。");
+PyDoc_STRVAR(zh_alias_doc_281015_1,
+"写入($self, text, /)\n--\n\n与 write 相同。");
+PyDoc_STRVAR(zh_alias_doc_55984_2,
+"关闭($self, /)\n--\n\n与 close 相同。");
 static PyMethodDef textiowrapper_methods[] = {
     _IO_TEXTIOWRAPPER_DETACH_METHODDEF
     _IO_TEXTIOWRAPPER_RECONFIGURE_METHODDEF
@@ -3396,6 +3403,10 @@ static PyMethodDef textiowrapper_methods[] = {
     _IO_TEXTIOWRAPPER_TELL_METHODDEF
     _IO_TEXTIOWRAPPER_TRUNCATE_METHODDEF
 
+    /* 中文IO方法: 读取=read, 写入=write, 关闭=close */
+    {"读取", _PyCFunction_CAST(_io_TextIOWrapper_read), METH_FASTCALL, zh_alias_doc_508763_0},
+    {"写入", (PyCFunction)_io_TextIOWrapper_write, METH_O, zh_alias_doc_281015_1},
+    {"关闭", (PyCFunction)_io_TextIOWrapper_close, METH_NOARGS, zh_alias_doc_55984_2},
     {"__getstate__", _PyIOBase_cannot_pickle, METH_NOARGS},
     {NULL, NULL}
 };

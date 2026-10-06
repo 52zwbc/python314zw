@@ -2534,6 +2534,25 @@ PyType_Spec bufferediobase_spec = {
     .slots = bufferediobase_slots,
 };
 
+/* 中文别名文档(签名与英文一致, 名称为中文) */
+PyDoc_STRVAR(zh_alias_doc_7207_0,
+"读取($self, size=-1, /)\n--\n\n与 read 相同。");
+PyDoc_STRVAR(zh_alias_doc_909788_1,
+"关闭($self, /)\n--\n\n与 close 相同。");
+PyDoc_STRVAR(zh_alias_doc_778298_2,
+"写入($self, buffer, /)\n--\n\n与 write 相同。");
+PyDoc_STRVAR(zh_alias_doc_909788_3,
+"关闭($self, /)\n--\n\n与 close 相同。");
+PyDoc_STRVAR(zh_alias_doc_7207_4,
+"读取($self, /)\n--\n\n与  相同。");
+PyDoc_STRVAR(zh_alias_doc_909788_5,
+"关闭($self, /)\n--\n\n与  相同。");
+PyDoc_STRVAR(zh_alias_doc_7207_6,
+"读取($self, size=-1, /)\n--\n\n与 read 相同。");
+PyDoc_STRVAR(zh_alias_doc_778298_7,
+"写入($self, buffer, /)\n--\n\n与 write 相同。");
+PyDoc_STRVAR(zh_alias_doc_909788_8,
+"关闭($self, /)\n--\n\n与 close 相同。");
 static PyMethodDef bufferedreader_methods[] = {
     /* BufferedIOMixin methods */
     _IO__BUFFERED_DETACH_METHODDEF
@@ -2554,6 +2573,9 @@ static PyMethodDef bufferedreader_methods[] = {
     _IO__BUFFERED_SEEK_METHODDEF
     _IO__BUFFERED_TELL_METHODDEF
     _IO__BUFFERED_TRUNCATE_METHODDEF
+    /* 中文IO方法 */
+    {"读取", _PyCFunction_CAST(_io__Buffered_read), METH_FASTCALL, zh_alias_doc_7207_0},
+    {"关闭", (PyCFunction)_io__Buffered_close, METH_NOARGS, zh_alias_doc_909788_1},
     _IO__BUFFERED___SIZEOF___METHODDEF
 
     {"__getstate__", _PyIOBase_cannot_pickle, METH_NOARGS},
@@ -2608,6 +2630,9 @@ static PyMethodDef bufferedwriter_methods[] = {
     _IO__BUFFERED_ISATTY_METHODDEF
     _IO__BUFFERED__DEALLOC_WARN_METHODDEF
 
+    /* 中文IO方法 */
+    {"写入", (PyCFunction)_io_BufferedWriter_write, METH_O, zh_alias_doc_778298_2},
+    {"关闭", (PyCFunction)_io__Buffered_close, METH_NOARGS, zh_alias_doc_909788_3},
     _IO_BUFFEREDWRITER_WRITE_METHODDEF
     _IO__BUFFERED_TRUNCATE_METHODDEF
     _IO__BUFFERED_FLUSH_METHODDEF
@@ -2670,6 +2695,9 @@ static PyMethodDef bufferedrwpair_methods[] = {
     {"writable", bufferedrwpair_writable, METH_NOARGS},
 
     {"close", bufferedrwpair_close, METH_NOARGS},
+    {"读取", bufferedrwpair_read, METH_VARARGS, NULL},
+    {"写入", bufferedrwpair_write, METH_VARARGS, NULL},
+    {"关闭", bufferedrwpair_close, METH_NOARGS, NULL},
     {"isatty", bufferedrwpair_isatty, METH_NOARGS},
 
     {NULL, NULL}
@@ -2729,6 +2757,10 @@ static PyMethodDef bufferedrandom_methods[] = {
     _IO__BUFFERED_READINTO1_METHODDEF
     _IO__BUFFERED_READLINE_METHODDEF
     _IO__BUFFERED_PEEK_METHODDEF
+    /* 中文IO方法 */
+    {"读取", _PyCFunction_CAST(_io__Buffered_read), METH_FASTCALL, zh_alias_doc_7207_6},
+    {"写入", (PyCFunction)_io_BufferedWriter_write, METH_O, zh_alias_doc_778298_7},
+    {"关闭", (PyCFunction)_io__Buffered_close, METH_NOARGS, zh_alias_doc_909788_8},
     _IO_BUFFEREDWRITER_WRITE_METHODDEF
     _IO__BUFFERED___SIZEOF___METHODDEF
 

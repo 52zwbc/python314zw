@@ -2541,6 +2541,57 @@ static PySequenceMethods set_as_sequence = {
 
 /* set object ********************************************************/
 
+/* 中文别名文档(签名与英文一致, 名称为中文) */
+PyDoc_STRVAR(zh_alias_doc_870492_0,
+"添加($self, object, /)\n--\n\n与 add 相同。");
+PyDoc_STRVAR(zh_alias_doc_351736_1,
+"清空($self, /)\n--\n\n与 clear 相同。");
+PyDoc_STRVAR(zh_alias_doc_268588_2,
+"复制($self, /)\n--\n\n与 copy 相同。");
+PyDoc_STRVAR(zh_alias_doc_984365_3,
+"差集($self, /, *others)\n--\n\n与 difference 相同。");
+PyDoc_STRVAR(zh_alias_doc_978154_4,
+"更新差集($self, /, *others)\n--\n\n与 difference_update 相同。");
+PyDoc_STRVAR(zh_alias_doc_34806_5,
+"静默删除($self, object, /)\n--\n\n与 discard 相同。");
+PyDoc_STRVAR(zh_alias_doc_94734_6,
+"交集($self, /, *others)\n--\n\n与 intersection 相同。");
+PyDoc_STRVAR(zh_alias_doc_187211_7,
+"更新交集($self, /, *others)\n--\n\n与 intersection_update 相同。");
+PyDoc_STRVAR(zh_alias_doc_21934_8,
+"不相交($self, other, /)\n--\n\n与 isdisjoint 相同。");
+PyDoc_STRVAR(zh_alias_doc_341913_9,
+"被包含($self, other, /)\n--\n\n与 issubset 相同。");
+PyDoc_STRVAR(zh_alias_doc_435026_10,
+"包含($self, other, /)\n--\n\n与 issuperset 相同。");
+PyDoc_STRVAR(zh_alias_doc_188656_11,
+"弹出($self, /)\n--\n\n与 pop 相同。");
+PyDoc_STRVAR(zh_alias_doc_445023_12,
+"删除($self, object, /)\n--\n\n与 remove 相同。");
+PyDoc_STRVAR(zh_alias_doc_716716_13,
+"对称差集($self, other, /)\n--\n\n与 symmetric_difference 相同。");
+PyDoc_STRVAR(zh_alias_doc_733303_14,
+"更新对称差集($self, other, /)\n--\n\n与 symmetric_difference_update 相同。");
+PyDoc_STRVAR(zh_alias_doc_502357_15,
+"并集($self, /, *others)\n--\n\n与 union 相同。");
+PyDoc_STRVAR(zh_alias_doc_464196_16,
+"更新($self, /, *others)\n--\n\n与 update 相同。");
+PyDoc_STRVAR(zh_alias_doc_268588_17,
+"复制($self, /)\n--\n\n与 copy 相同。");
+PyDoc_STRVAR(zh_alias_doc_984365_18,
+"差集($self, /, *others)\n--\n\n与 difference 相同。");
+PyDoc_STRVAR(zh_alias_doc_94734_19,
+"交集($self, /, *others)\n--\n\n与 intersection 相同。");
+PyDoc_STRVAR(zh_alias_doc_21934_20,
+"不相交($self, other, /)\n--\n\n与 isdisjoint 相同。");
+PyDoc_STRVAR(zh_alias_doc_341913_21,
+"被包含($self, other, /)\n--\n\n与 issubset 相同。");
+PyDoc_STRVAR(zh_alias_doc_435026_22,
+"包含($self, other, /)\n--\n\n与 issuperset 相同。");
+PyDoc_STRVAR(zh_alias_doc_716716_23,
+"对称差集($self, other, /)\n--\n\n与 symmetric_difference 相同。");
+PyDoc_STRVAR(zh_alias_doc_502357_24,
+"并集($self, /, *others)\n--\n\n与 union 相同。");
 static PyMethodDef set_methods[] = {
     SET_ADD_METHODDEF
     SET_CLEAR_METHODDEF
@@ -2561,6 +2612,24 @@ static PyMethodDef set_methods[] = {
     SET_SYMMETRIC_DIFFERENCE_METHODDEF
     SET_SYMMETRIC_DIFFERENCE_UPDATE_METHODDEF
     SET_UNION_METHODDEF
+    /* 中文方法别名 */
+    {"添加", (PyCFunction)set_add, METH_O, zh_alias_doc_870492_0},
+    {"清空", (PyCFunction)set_clear, METH_NOARGS, zh_alias_doc_351736_1},
+    {"复制", (PyCFunction)frozenset_copy, METH_NOARGS, zh_alias_doc_268588_2},
+    {"差集", _PyCFunction_CAST(set_difference_multi), METH_FASTCALL, zh_alias_doc_984365_3},
+    {"更新差集", _PyCFunction_CAST(set_difference_update), METH_FASTCALL, zh_alias_doc_978154_4},
+    {"静默删除", (PyCFunction)set_discard, METH_O, zh_alias_doc_34806_5},
+    {"交集", _PyCFunction_CAST(set_intersection_multi), METH_FASTCALL, zh_alias_doc_94734_6},
+    {"更新交集", _PyCFunction_CAST(set_intersection_update_multi), METH_FASTCALL, zh_alias_doc_187211_7},
+    {"不相交", (PyCFunction)set_isdisjoint, METH_O, zh_alias_doc_21934_8},
+    {"被包含", (PyCFunction)set_issubset, METH_O, zh_alias_doc_341913_9},
+    {"包含", (PyCFunction)set_issuperset, METH_O, zh_alias_doc_435026_10},
+    {"弹出", (PyCFunction)set_pop, METH_NOARGS, zh_alias_doc_188656_11},
+    {"删除", (PyCFunction)set_remove, METH_O, zh_alias_doc_445023_12},
+    {"对称差集", (PyCFunction)set_symmetric_difference, METH_O, zh_alias_doc_716716_13},
+    {"更新对称差集", (PyCFunction)set_symmetric_difference_update, METH_O, zh_alias_doc_733303_14},
+    {"并集", _PyCFunction_CAST(set_union), METH_FASTCALL, zh_alias_doc_502357_15},
+    {"更新", _PyCFunction_CAST(set_update), METH_FASTCALL, zh_alias_doc_464196_16},
     SET_UPDATE_METHODDEF
     {"__class_getitem__", Py_GenericAlias, METH_O|METH_CLASS,
      PyDoc_STR("sets are generic over the type of their elements")},
@@ -2667,6 +2736,15 @@ static PyMethodDef frozenset_methods[] = {
     SET___SIZEOF___METHODDEF
     SET_SYMMETRIC_DIFFERENCE_METHODDEF
     SET_UNION_METHODDEF
+    /* 中文方法别名(frozenset) */
+    {"复制", (PyCFunction)frozenset_copy, METH_NOARGS, zh_alias_doc_268588_17},
+    {"差集", _PyCFunction_CAST(set_difference_multi), METH_FASTCALL, zh_alias_doc_984365_18},
+    {"交集", _PyCFunction_CAST(set_intersection_multi), METH_FASTCALL, zh_alias_doc_94734_19},
+    {"不相交", (PyCFunction)set_isdisjoint, METH_O, zh_alias_doc_21934_20},
+    {"被包含", (PyCFunction)set_issubset, METH_O, zh_alias_doc_341913_21},
+    {"包含", (PyCFunction)set_issuperset, METH_O, zh_alias_doc_435026_22},
+    {"对称差集", (PyCFunction)set_symmetric_difference, METH_O, zh_alias_doc_716716_23},
+    {"并集", _PyCFunction_CAST(set_union), METH_FASTCALL, zh_alias_doc_502357_24},
     {"__class_getitem__", Py_GenericAlias, METH_O|METH_CLASS,
      PyDoc_STR("frozensets are generic over the type of their elements")},
     {NULL,              NULL}   /* sentinel */

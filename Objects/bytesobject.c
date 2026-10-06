@@ -2668,6 +2668,11 @@ bytes_getnewargs(PyObject *op, PyObject *Py_UNUSED(dummy))
 }
 
 
+/* 中文别名文档(签名与英文一致, 名称为中文) */
+PyDoc_STRVAR(zh_alias_doc_605533_0,
+"解码($self, /, encoding=\'utf-8\', errors=\'strict\')\n--\n\n与 decode 相同。");
+PyDoc_STRVAR(zh_alias_doc_235235_1,
+"十六进制解码($type, string, /)\n--\n\n与 fromhex 相同。");
 static PyMethodDef
 bytes_methods[] = {
     {"__getnewargs__", bytes_getnewargs,  METH_NOARGS},
@@ -2724,7 +2729,10 @@ bytes_methods[] = {
     BYTES_TRANSLATE_METHODDEF
     {"upper", stringlib_upper, METH_NOARGS, _Py_upper__doc__},
     STRINGLIB_ZFILL_METHODDEF
-    {NULL,     NULL}                         /* sentinel */
+        /* 中文方法别名 */
+    {"解码", _PyCFunction_CAST(bytes_decode), METH_FASTCALL|METH_KEYWORDS, zh_alias_doc_605533_0},
+    {"十六进制解码", (PyCFunction)bytes_fromhex, METH_O|METH_CLASS, zh_alias_doc_235235_1},
+{NULL,     NULL}                         /* sentinel */
 };
 
 static PyObject *

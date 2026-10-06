@@ -1777,6 +1777,11 @@ float___format___impl(PyObject *self, PyObject *format_spec)
     return _PyUnicodeWriter_Finish(&writer);
 }
 
+/* 中文别名文档(签名与英文一致, 名称为中文) */
+PyDoc_STRVAR(zh_alias_doc_446956_0,
+"转十六进制($self, /)\n--\n\n与 hex 相同。");
+PyDoc_STRVAR(zh_alias_doc_399846_1,
+"从十六进制($type, string, /)\n--\n\n与 fromhex 相同。");
 static PyMethodDef float_methods[] = {
     FLOAT_FROM_NUMBER_METHODDEF
     FLOAT_CONJUGATE_METHODDEF
@@ -1790,6 +1795,9 @@ static PyMethodDef float_methods[] = {
     FLOAT_IS_INTEGER_METHODDEF
     FLOAT___GETNEWARGS___METHODDEF
     FLOAT___GETFORMAT___METHODDEF
+    /* 中文方法别名 */
+    {"转十六进制", (PyCFunction)float_hex, METH_NOARGS, zh_alias_doc_446956_0},
+    {"从十六进制", (PyCFunction)float_fromhex, METH_O|METH_CLASS, zh_alias_doc_399846_1},
     FLOAT___FORMAT___METHODDEF
     {NULL,              NULL}           /* sentinel */
 };

@@ -107,7 +107,7 @@
   <String Id="SuccessLaunchButton">启动(&amp;L)</String>
   <String Id="SuccessRestartText">可能需要重启计算机才能完成文件更新。</String>
   <String Id="SuccessRestartButton">重启(&amp;R)</String>
-  <String Id="SuccessInstallMessage">中文python，查看帮助请搜索微信小程序《52中文编程》或访问网站&lt;a href="https://www.52zwbc.com"&gt;https://www.52zwbc.com&lt;/a&gt; 。（微信号sdglsdwx）。宁阳风景秀美，欢迎来宁阳游玩。</String>
+  <String Id="SuccessInstallMessage">查看帮助请搜索微信小程序《52中文编程》或访问网站&lt;a href="https://www.52zwbc.com"&gt;https://www.52zwbc.com&lt;/a&gt; 。作者山东宁阳郭老师（微信号sdglsdwx）。宁阳风景秀美，欢迎来宁阳游玩。</String>
   <String Id="SuccessModifyMessage">感谢使用 [WixBundleName]。</String>
   <String Id="SuccessRepairMessage">感谢使用 [WixBundleName]。
 
@@ -126,5 +126,5 @@
   <String Id="SuccessMaxPathButton">禁用路径长度限制</String>
   <String Id="SuccessMaxPathButtonNote">修改计算机配置，允许包括 Python 在内的程序绕过 260 字符的“MAX_PATH”限制。</String>
 
-  <String Id="DeprecationMessage">注意：此安装程序即将停用，Python 3.15 之后将不再提供。&lt;a href="https://docs.python.org/using/windows"&gt;更多信息&lt;/a&gt;</String>
+  <String Id="DeprecationMessage">注意：这是山东宁阳郭老师（&lt;a href="https://www.52zwbc.com/"&gt;https://www.52zwbc.com/&lt;/a&gt;）的修改版本，添加了中文内置函数。</String>
 </WixLocalization>

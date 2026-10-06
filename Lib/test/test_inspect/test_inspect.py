@@ -6091,6 +6091,12 @@ class TestSignatureDefinitions(unittest.TestCase):
         # These need *args support in Argument Clinic
         needs_varargs = {"min", "max", "__build_class__"}
         no_signature |= needs_varargs
+        # 中文版包装了 __build_class__ 以支持 def 初始化, 此时它有合法签名
+        try:
+            if getattr(builtins.__build_class__, '_zh_wrapped', False):
+                no_signature.discard('__build_class__')
+        except Exception:
+            pass
 
         methods_no_signature = {
             'dict': {'update'},
@@ -6103,6 +6109,36 @@ class TestSignatureDefinitions(unittest.TestCase):
             'memoryview': {'cast', 'hex'},
             'str': {'count', 'endswith', 'find', 'index', 'maketrans', 'rfind', 'rindex', 'startswith'},
         }
+        # 中文别名与英文行为一致: 镜像白名单
+        no_signature |= {'范围', '切片', '查看成员',
+                         '下一个', '迭代器', '查看属性',
+                         '字节串', '可变字节串', '字典', '整数', '字符串',
+                         '类型', '父类'}
+        unsupported_signature |= {'异步下一个'}
+        methods_no_signature = dict(methods_no_signature)
+        _dict_no = set(methods_no_signature.get('dict', set())) | {'更新'}
+        methods_no_signature.update({
+            '字典': set(_dict_no),
+            'dict': set(_dict_no),
+            'object': set(methods_no_signature.get('object', set())),
+            '基础对象': {'__class__'},
+        })
+        methods_unsupported_signature = dict(methods_unsupported_signature)
+        _str_un = set(methods_unsupported_signature.get('str', set())) | {'统计', '以此结尾', '查找', '索引', '映射转换表', '右查找', '右索引', '以此开头'}
+        _dict_un = set(methods_unsupported_signature.get('dict', set())) | {'弹出'}
+        _bytes_un = set(methods_unsupported_signature.get('bytes', set()))
+        methods_unsupported_signature.update({
+            '字典': set(_dict_un),
+            'dict': set(_dict_un),
+            '字符串': set(_str_un) | {'count', 'endswith', 'find', 'index', 'maketrans', 'rfind', 'rindex', 'startswith'},
+            'str': set(_str_un),
+            'bytes': set(_bytes_un),
+            '字节串': set(_bytes_un) | {'count', 'endswith', 'find', 'hex', 'index', 'rfind', 'rindex', 'startswith'},
+            'bytearray': set(methods_unsupported_signature.get('bytearray', set())),
+            '可变字节串': set(methods_unsupported_signature.get('bytearray', set())) | {'count', 'endswith', 'find', 'hex', 'index', 'rfind', 'rindex', 'startswith'},
+            'memoryview': set(methods_unsupported_signature.get('memoryview', set())),
+            '内存视图': set(methods_unsupported_signature.get('memoryview', set())) | {'cast', 'hex'},
+        })
         self._test_module_has_signatures(builtins,
                 no_signature, unsupported_signature,
                 methods_no_signature, methods_unsupported_signature)
@@ -6179,7 +6215,7 @@ class TestSignatureDefinitions(unittest.TestCase):
 
     def test_io_module_has_signatures(self):
         methods_no_signature = {
-            'BufferedRWPair': {'read', 'peek', 'read1', 'readinto', 'readinto1', 'write'},
+            'BufferedRWPair': {'read', 'peek', 'read1', 'readinto', 'readinto1', 'write', '读取', '写入'},
         }
         self._test_module_has_signatures(io,
                 methods_no_signature=methods_no_signature)
@@ -6276,7 +6312,8 @@ class TestSignatureDefinitions(unittest.TestCase):
             'Generic': {'__class_getitem__', '__init_subclass__'},
         }
         methods_unsupported_signature = {
-            'Text': {'count', 'find', 'index', 'rfind', 'rindex', 'startswith', 'endswith', 'maketrans'},
+            'Text': {'count', 'find', 'index', 'rfind', 'rindex', 'startswith', 'endswith', 'maketrans',
+                     '统计', '查找', '索引', '右查找', '右索引', '以此开头', '以此结尾', '映射转换表'},
         }
         self._test_module_has_signatures(typing, no_signature,
                 methods_no_signature=methods_no_signature,

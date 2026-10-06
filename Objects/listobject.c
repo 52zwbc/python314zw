@@ -3552,6 +3552,29 @@ list___sizeof___impl(PyListObject *self)
 static PyObject *list_iter(PyObject *seq);
 static PyObject *list_subscript(PyObject*, PyObject*);
 
+/* 中文别名文档(签名与英文一致, 名称为中文) */
+PyDoc_STRVAR(zh_alias_doc_206986_0,
+"追加($self, object, /)\n--\n\n与 append 相同。");
+PyDoc_STRVAR(zh_alias_doc_248291_1,
+"清空($self, /)\n--\n\n与 clear 相同。");
+PyDoc_STRVAR(zh_alias_doc_751500_2,
+"统计($self, value, /)\n--\n\n与 count 相同。");
+PyDoc_STRVAR(zh_alias_doc_386282_3,
+"复制($self, /)\n--\n\n与 copy 相同。");
+PyDoc_STRVAR(zh_alias_doc_513019_4,
+"扩展($self, iterable, /)\n--\n\n与 extend 相同。");
+PyDoc_STRVAR(zh_alias_doc_278354_5,
+"索引($self, value, start=0, stop=sys.maxsize, /)\n--\n\n与 index 相同。");
+PyDoc_STRVAR(zh_alias_doc_951393_6,
+"插入($self, index, object, /)\n--\n\n与 insert 相同。");
+PyDoc_STRVAR(zh_alias_doc_46456_7,
+"弹出($self, index=-1, /)\n--\n\n与 pop 相同。");
+PyDoc_STRVAR(zh_alias_doc_280905_8,
+"删除($self, value, /)\n--\n\n与 remove 相同。");
+PyDoc_STRVAR(zh_alias_doc_239306_9,
+"反转($self, /)\n--\n\n与 reverse 相同。");
+PyDoc_STRVAR(zh_alias_doc_527735_10,
+"排序($self, /, *, key=None, reverse=False)\n--\n\n与 sort 相同。");
 static PyMethodDef list_methods[] = {
     {"__getitem__", list_subscript, METH_O|METH_COEXIST,
      PyDoc_STR("__getitem__($self, index, /)\n--\n\nReturn self[index].")},
@@ -3567,6 +3590,18 @@ static PyMethodDef list_methods[] = {
     LIST_INDEX_METHODDEF
     LIST_COUNT_METHODDEF
     LIST_REVERSE_METHODDEF
+    /* 中文方法别名 */
+    {"追加", (PyCFunction)list_append, METH_O, zh_alias_doc_206986_0},
+    {"清空", (PyCFunction)py_list_clear, METH_NOARGS, zh_alias_doc_248291_1},
+    {"统计", (PyCFunction)list_count, METH_O, zh_alias_doc_751500_2},
+    {"复制", (PyCFunction)list_copy, METH_NOARGS, zh_alias_doc_386282_3},
+    {"扩展", (PyCFunction)list_extend, METH_O, zh_alias_doc_513019_4},
+    {"索引", _PyCFunction_CAST(list_index), METH_FASTCALL, zh_alias_doc_278354_5},
+    {"插入", _PyCFunction_CAST(list_insert), METH_FASTCALL, zh_alias_doc_951393_6},
+    {"弹出", _PyCFunction_CAST(list_pop), METH_FASTCALL, zh_alias_doc_46456_7},
+    {"删除", (PyCFunction)list_remove, METH_O, zh_alias_doc_280905_8},
+    {"反转", (PyCFunction)list_reverse, METH_NOARGS, zh_alias_doc_239306_9},
+    {"排序", _PyCFunction_CAST(list_sort), METH_FASTCALL|METH_KEYWORDS, zh_alias_doc_527735_10},
     LIST_SORT_METHODDEF
     {"__class_getitem__", Py_GenericAlias, METH_O|METH_CLASS,
      PyDoc_STR("lists are generic over the type of their contents")},

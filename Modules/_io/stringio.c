@@ -1035,6 +1035,13 @@ _io_StringIO_newlines_get_impl(stringio *self)
     return PyObject_GetAttr(self->decoder, &_Py_ID(newlines));
 }
 
+/* 中文别名文档(签名与英文一致, 名称为中文) */
+PyDoc_STRVAR(zh_alias_doc_823025_0,
+"读取($self, size=-1, /)\n--\n\n与 read 相同。");
+PyDoc_STRVAR(zh_alias_doc_272677_1,
+"写入($self, s, /)\n--\n\n与 write 相同。");
+PyDoc_STRVAR(zh_alias_doc_100133_2,
+"关闭($self, /)\n--\n\n与 close 相同。");
 static struct PyMethodDef stringio_methods[] = {
     _IO_STRINGIO_CLOSE_METHODDEF
     _IO_STRINGIO_GETVALUE_METHODDEF
@@ -1050,6 +1057,10 @@ static struct PyMethodDef stringio_methods[] = {
     _IO_STRINGIO_WRITABLE_METHODDEF
 
     _IO_STRINGIO___GETSTATE___METHODDEF
+    /* 中文IO方法: 读取=read, 写入=write, 关闭=close */
+    {"读取", _PyCFunction_CAST(_io_StringIO_read), METH_FASTCALL, zh_alias_doc_823025_0},
+    {"写入", (PyCFunction)_io_StringIO_write, METH_O, zh_alias_doc_272677_1},
+    {"关闭", (PyCFunction)_io_StringIO_close, METH_NOARGS, zh_alias_doc_100133_2},
     _IO_STRINGIO___SETSTATE___METHODDEF
     {NULL, NULL}        /* sentinel */
 };

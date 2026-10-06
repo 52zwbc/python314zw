@@ -33,7 +33,7 @@ jobs:
           echo 打印("banner-ok")> banner_check.py
           PCbuild\amd64\python.exe banner_check.py > banner_out.txt
           type banner_out.txt
-          findstr /C:"中文python" banner_out.txt
+          findstr /C:"52zwbc.com" banner_out.txt
           findstr /C:"52zwbc.com" banner_out.txt
         shell: cmd
 

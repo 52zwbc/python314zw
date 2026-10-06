@@ -400,9 +400,9 @@ pymain_print_zh_banner(void)
         return;
     }
     const char *banner =
-        "中文python，查看帮助请搜索微信小程序《52中文编程》"
-        "或访问网站 https://www.52zwbc.com 。"
-        "（微信号sdglsdwx）。宁阳风景秀美，欢迎来宁阳游玩。";
+        "查看帮助请搜索微信小程序《52中文编程》或访问网站 "
+        "https://www.52zwbc.com 。作者山东宁阳郭老师（微信号sdglsdwx）。"
+        "宁阳风景秀美，欢迎来宁阳游玩。";
     PyObject *text = PyUnicode_FromString(banner);
     if (text == NULL) {
         PyErr_Clear();

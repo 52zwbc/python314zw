@@ -14505,6 +14505,101 @@ _PyUnicode_Dedent(PyObject *unicode)
     return res;
 }
 
+/* 中文别名文档(签名与英文一致, 名称为中文) */
+PyDoc_STRVAR(zh_alias_doc_92926_0,
+"首字大写($self, /)\n--\n\n与 capitalize 相同。");
+PyDoc_STRVAR(zh_alias_doc_594862_1,
+"全转小写($self, /)\n--\n\n与 casefold 相同。");
+PyDoc_STRVAR(zh_alias_doc_841363_2,
+"加宽($self, width, fillchar=\' \', /)\n--\n\n与 center 相同。");
+PyDoc_STRVAR(zh_alias_doc_679104_3,
+"统计($self, sub[, start[, end]], /)\n--\n\n与 count 相同。");
+PyDoc_STRVAR(zh_alias_doc_635833_4,
+"编码($self, /, encoding=\'utf-8\', errors=\'strict\')\n--\n\n与 encode 相同。");
+PyDoc_STRVAR(zh_alias_doc_168853_5,
+"以此结尾($self, suffix[, start[, end]], /)\n--\n\n与 endswith 相同。");
+PyDoc_STRVAR(zh_alias_doc_523714_6,
+"缩进($self, /, tabsize=8)\n--\n\n与 expandtabs 相同。");
+PyDoc_STRVAR(zh_alias_doc_298659_7,
+"查找($self, sub[, start[, end]], /)\n--\n\n与 find 相同。");
+PyDoc_STRVAR(zh_alias_doc_639107_8,
+"格式化($self, /)\n--\n\n与  相同。");
+PyDoc_STRVAR(zh_alias_doc_695161_9,
+"格式化映射($self, /)\n--\n\n与  相同。");
+PyDoc_STRVAR(zh_alias_doc_644301_10,
+"仅ascii($self, /)\n--\n\n与 isascii 相同。");
+PyDoc_STRVAR(zh_alias_doc_210061_11,
+"仅字母或数($self, /)\n--\n\n与 isalnum 相同。");
+PyDoc_STRVAR(zh_alias_doc_86129_12,
+"仅字母($self, /)\n--\n\n与 isalpha 相同。");
+PyDoc_STRVAR(zh_alias_doc_685540_13,
+"仅正整数($self, /)\n--\n\n与 isdigit 相同。");
+PyDoc_STRVAR(zh_alias_doc_12326_14,
+"是标识符($self, /)\n--\n\n与 isidentifier 相同。");
+PyDoc_STRVAR(zh_alias_doc_277422_15,
+"仅小写($self, /)\n--\n\n与 islower 相同。");
+PyDoc_STRVAR(zh_alias_doc_384162_16,
+"仅数字($self, /)\n--\n\n与 isnumeric 相同。");
+PyDoc_STRVAR(zh_alias_doc_116972_17,
+"仅可打印($self, /)\n--\n\n与 isprintable 相同。");
+PyDoc_STRVAR(zh_alias_doc_107029_18,
+"仅空白($self, /)\n--\n\n与 isspace 相同。");
+PyDoc_STRVAR(zh_alias_doc_549216_19,
+"仅大写($self, /)\n--\n\n与 isupper 相同。");
+PyDoc_STRVAR(zh_alias_doc_862898_20,
+"连接($self, iterable, /)\n--\n\n与 join 相同。");
+PyDoc_STRVAR(zh_alias_doc_208957_21,
+"小写($self, /)\n--\n\n与 lower 相同。");
+PyDoc_STRVAR(zh_alias_doc_410558_22,
+"右加宽($self, width, fillchar=\' \', /)\n--\n\n与 ljust 相同。");
+PyDoc_STRVAR(zh_alias_doc_325027_23,
+"删左($self, chars=None, /)\n--\n\n与 lstrip 相同。");
+PyDoc_STRVAR(zh_alias_doc_993859_24,
+"映射转换表(x, y=<unrepresentable>, z=<unrepresentable>, /)\n--\n\n与 maketrans 相同。");
+PyDoc_STRVAR(zh_alias_doc_205057_25,
+"三分($self, sep, /)\n--\n\n与 partition 相同。");
+PyDoc_STRVAR(zh_alias_doc_469143_26,
+"删前缀($self, prefix, /)\n--\n\n与 removeprefix 相同。");
+PyDoc_STRVAR(zh_alias_doc_212157_27,
+"删后缀($self, suffix, /)\n--\n\n与 removesuffix 相同。");
+PyDoc_STRVAR(zh_alias_doc_925747_28,
+"替换($self, old, new, /, count=-1)\n--\n\n与 replace 相同。");
+PyDoc_STRVAR(zh_alias_doc_774449_29,
+"右查找($self, sub[, start[, end]], /)\n--\n\n与 rfind 相同。");
+PyDoc_STRVAR(zh_alias_doc_711668_30,
+"左加宽($self, width, fillchar=\' \', /)\n--\n\n与 rjust 相同。");
+PyDoc_STRVAR(zh_alias_doc_369544_31,
+"右三分($self, sep, /)\n--\n\n与 rpartition 相同。");
+PyDoc_STRVAR(zh_alias_doc_698051_32,
+"右分割($self, /, sep=None, maxsplit=-1)\n--\n\n与 rsplit 相同。");
+PyDoc_STRVAR(zh_alias_doc_692843_33,
+"删右($self, chars=None, /)\n--\n\n与 rstrip 相同。");
+PyDoc_STRVAR(zh_alias_doc_925068_34,
+"分割($self, /, sep=None, maxsplit=-1)\n--\n\n与 split 相同。");
+PyDoc_STRVAR(zh_alias_doc_144308_35,
+"分割为行($self, /, keepends=False)\n--\n\n与 splitlines 相同。");
+PyDoc_STRVAR(zh_alias_doc_711023_36,
+"以此开头($self, prefix[, start[, end]], /)\n--\n\n与 startswith 相同。");
+PyDoc_STRVAR(zh_alias_doc_470782_37,
+"删两侧($self, chars=None, /)\n--\n\n与 strip 相同。");
+PyDoc_STRVAR(zh_alias_doc_69780_38,
+"大小写切换($self, /)\n--\n\n与 swapcase 相同。");
+PyDoc_STRVAR(zh_alias_doc_648573_39,
+"标题化($self, /)\n--\n\n与 title 相同。");
+PyDoc_STRVAR(zh_alias_doc_486729_40,
+"转换($self, table, /)\n--\n\n与 translate 相同。");
+PyDoc_STRVAR(zh_alias_doc_312206_41,
+"大写($self, /)\n--\n\n与 upper 相同。");
+PyDoc_STRVAR(zh_alias_doc_654600_42,
+"用零填充($self, width, /)\n--\n\n与 zfill 相同。");
+PyDoc_STRVAR(zh_alias_doc_800054_43,
+"索引($self, sub[, start[, end]], /)\n--\n\n与 index 相同。");
+PyDoc_STRVAR(zh_alias_doc_729907_44,
+"仅十进制数($self, /)\n--\n\n与 isdecimal 相同。");
+PyDoc_STRVAR(zh_alias_doc_667237_45,
+"含标题单词($self, /)\n--\n\n与 istitle 相同。");
+PyDoc_STRVAR(zh_alias_doc_683982_46,
+"右索引($self, sub[, start[, end]], /)\n--\n\n与 rindex 相同。");
 static PyMethodDef unicode_methods[] = {
     UNICODE_ENCODE_METHODDEF
     UNICODE_REPLACE_METHODDEF
@@ -14556,6 +14651,54 @@ static PyMethodDef unicode_methods[] = {
     UNICODE_MAKETRANS_METHODDEF
     UNICODE_SIZEOF_METHODDEF
     {"__getnewargs__",  unicode_getnewargs, METH_NOARGS},
+    /* 中文方法别名 */
+    {"首字大写", (PyCFunction)unicode_capitalize, METH_NOARGS, zh_alias_doc_92926_0},
+    {"全转小写", (PyCFunction)unicode_casefold, METH_NOARGS, zh_alias_doc_594862_1},
+    {"加宽", _PyCFunction_CAST(unicode_center), METH_FASTCALL, zh_alias_doc_841363_2},
+    {"统计", _PyCFunction_CAST(unicode_count), METH_FASTCALL, zh_alias_doc_679104_3},
+    {"编码", _PyCFunction_CAST(unicode_encode), METH_FASTCALL|METH_KEYWORDS, zh_alias_doc_635833_4},
+    {"以此结尾", _PyCFunction_CAST(unicode_endswith), METH_FASTCALL, zh_alias_doc_168853_5},
+    {"缩进", _PyCFunction_CAST(unicode_expandtabs), METH_FASTCALL|METH_KEYWORDS, zh_alias_doc_523714_6},
+    {"查找", _PyCFunction_CAST(unicode_find), METH_FASTCALL, zh_alias_doc_298659_7},
+    {"格式化", _PyCFunction_CAST(do_string_format), METH_VARARGS | METH_KEYWORDS, zh_alias_doc_639107_8},
+    {"格式化映射", do_string_format_map, METH_O, zh_alias_doc_695161_9},
+    {"仅ascii", (PyCFunction)unicode_isascii, METH_NOARGS, zh_alias_doc_644301_10},
+    {"仅字母或数", (PyCFunction)unicode_isalnum, METH_NOARGS, zh_alias_doc_210061_11},
+    {"仅字母", (PyCFunction)unicode_isalpha, METH_NOARGS, zh_alias_doc_86129_12},
+    {"仅正整数", (PyCFunction)unicode_isdigit, METH_NOARGS, zh_alias_doc_685540_13},
+    {"是标识符", (PyCFunction)unicode_isidentifier, METH_NOARGS, zh_alias_doc_12326_14},
+    {"仅小写", (PyCFunction)unicode_islower, METH_NOARGS, zh_alias_doc_277422_15},
+    {"仅数字", (PyCFunction)unicode_isnumeric, METH_NOARGS, zh_alias_doc_384162_16},
+    {"仅可打印", (PyCFunction)unicode_isprintable, METH_NOARGS, zh_alias_doc_116972_17},
+    {"仅空白", (PyCFunction)unicode_isspace, METH_NOARGS, zh_alias_doc_107029_18},
+    {"仅大写", (PyCFunction)unicode_isupper, METH_NOARGS, zh_alias_doc_549216_19},
+    {"连接", (PyCFunction)unicode_join, METH_O, zh_alias_doc_862898_20},
+    {"小写", (PyCFunction)unicode_lower, METH_NOARGS, zh_alias_doc_208957_21},
+    {"右加宽", _PyCFunction_CAST(unicode_ljust), METH_FASTCALL, zh_alias_doc_410558_22},
+    {"删左", _PyCFunction_CAST(unicode_lstrip), METH_FASTCALL, zh_alias_doc_325027_23},
+    {"映射转换表", _PyCFunction_CAST(unicode_maketrans), METH_FASTCALL|METH_STATIC, zh_alias_doc_993859_24},
+    {"三分", (PyCFunction)unicode_partition, METH_O, zh_alias_doc_205057_25},
+    {"删前缀", (PyCFunction)unicode_removeprefix, METH_O, zh_alias_doc_469143_26},
+    {"删后缀", (PyCFunction)unicode_removesuffix, METH_O, zh_alias_doc_212157_27},
+    {"替换", _PyCFunction_CAST(unicode_replace), METH_FASTCALL|METH_KEYWORDS, zh_alias_doc_925747_28},
+    {"右查找", _PyCFunction_CAST(unicode_rfind), METH_FASTCALL, zh_alias_doc_774449_29},
+    {"左加宽", _PyCFunction_CAST(unicode_rjust), METH_FASTCALL, zh_alias_doc_711668_30},
+    {"右三分", (PyCFunction)unicode_rpartition, METH_O, zh_alias_doc_369544_31},
+    {"右分割", _PyCFunction_CAST(unicode_rsplit), METH_FASTCALL|METH_KEYWORDS, zh_alias_doc_698051_32},
+    {"删右", _PyCFunction_CAST(unicode_rstrip), METH_FASTCALL, zh_alias_doc_692843_33},
+    {"分割", _PyCFunction_CAST(unicode_split), METH_FASTCALL|METH_KEYWORDS, zh_alias_doc_925068_34},
+    {"分割为行", _PyCFunction_CAST(unicode_splitlines), METH_FASTCALL|METH_KEYWORDS, zh_alias_doc_144308_35},
+    {"以此开头", _PyCFunction_CAST(unicode_startswith), METH_FASTCALL, zh_alias_doc_711023_36},
+    {"删两侧", _PyCFunction_CAST(unicode_strip), METH_FASTCALL, zh_alias_doc_470782_37},
+    {"大小写切换", (PyCFunction)unicode_swapcase, METH_NOARGS, zh_alias_doc_69780_38},
+    {"标题化", (PyCFunction)unicode_title, METH_NOARGS, zh_alias_doc_648573_39},
+    {"转换", (PyCFunction)unicode_translate, METH_O, zh_alias_doc_486729_40},
+    {"大写", (PyCFunction)unicode_upper, METH_NOARGS, zh_alias_doc_312206_41},
+    {"用零填充", (PyCFunction)unicode_zfill, METH_O, zh_alias_doc_654600_42},
+    {"索引", _PyCFunction_CAST(unicode_index), METH_FASTCALL, zh_alias_doc_800054_43},
+    {"仅十进制数", (PyCFunction)unicode_isdecimal, METH_NOARGS, zh_alias_doc_729907_44},
+    {"含标题单词", (PyCFunction)unicode_istitle, METH_NOARGS, zh_alias_doc_667237_45},
+    {"右索引", _PyCFunction_CAST(unicode_rindex), METH_FASTCALL, zh_alias_doc_683982_46},
     {NULL, NULL}
 };
 

@@ -1251,6 +1251,13 @@ _io_FileIO_isatty_open_only(PyObject *op, PyObject *Py_UNUSED(dummy))
 
 #include "clinic/fileio.c.h"
 
+/* 中文别名文档(签名与英文一致, 名称为中文) */
+PyDoc_STRVAR(zh_alias_doc_459494_0,
+"读取($self, size=-1, /)\n--\n\n与 read 相同。");
+PyDoc_STRVAR(zh_alias_doc_411565_1,
+"写入($self, b, /)\n--\n\n与 write 相同。");
+PyDoc_STRVAR(zh_alias_doc_897760_2,
+"关闭($self, /)\n--\n\n与 close 相同。");
 static PyMethodDef fileio_methods[] = {
     _IO_FILEIO_READ_METHODDEF
     _IO_FILEIO_READALL_METHODDEF
@@ -1267,6 +1274,10 @@ static PyMethodDef fileio_methods[] = {
     _IO_FILEIO_ISATTY_METHODDEF
     {"_isatty_open_only", _io_FileIO_isatty_open_only, METH_NOARGS},
     {"_dealloc_warn", fileio_dealloc_warn, METH_O, NULL},
+    /* 中文IO方法: 读取=read, 写入=write, 关闭=close */
+    {"读取", _PyCFunction_CAST(_io_FileIO_read), METH_METHOD|METH_FASTCALL|METH_KEYWORDS, zh_alias_doc_459494_0},
+    {"写入", _PyCFunction_CAST(_io_FileIO_write), METH_METHOD|METH_FASTCALL|METH_KEYWORDS, zh_alias_doc_411565_1},
+    {"关闭", _PyCFunction_CAST(_io_FileIO_close), METH_METHOD|METH_FASTCALL|METH_KEYWORDS, zh_alias_doc_897760_2},
     {"__getstate__", _PyIOBase_cannot_pickle, METH_NOARGS},
     {NULL,           NULL}             /* sentinel */
 };

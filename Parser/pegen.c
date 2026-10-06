@@ -165,14 +165,54 @@ _get_keyword_or_name_type(Parser *p, struct token *new_token)
     Py_ssize_t name_len = new_token->end_col_offset - new_token->col_offset;
     assert(name_len > 0);
 
-    /* 中文关键字别名: "如果" (UTF-8 6 字节) 与 "if" 等价 */
-    if (name_len == 6 && new_token->start != NULL &&
-        memcmp(new_token->start, "如果", 6) == 0) {
-        for (int i = 0; i < p->n_keyword_lists; i++) {
-            for (KeywordToken *k = p->keywords[i]; k != NULL && k->type != -1; k++) {
-                if (strcmp(k->str, "if") == 0) {
-                    return k->type;
+    /* 属性访问 obj.attr 时不做关键字映射, 允许 l.删除() 等中文方法名 */
+    if (p->fill > 0 && p->tokens != NULL) {
+        Token *prev = p->tokens[p->fill - 1];
+        if (prev != NULL) {
+            if (prev->type == 23) {
+                return NAME;  /* DOT */
+            }
+            if (prev->bytes != NULL) {
+                const char *ps = PyBytes_AsString(prev->bytes);
+                if (ps != NULL && strcmp(ps, ".") == 0) {
+                    return NAME;
                 }
+                PyErr_Clear();
+            }
+        }
+    }
+
+    /* 中文关键字别名表: {中文 UTF-8, 英文} */
+    static const char *zh_kw[][2] = {
+        {"否则如果", "elif"}, {"如果", "if"}, {"否则", "else"},
+        {"遍历", "for"}, {"循环条件", "while"}, {"跳出", "break"}, {"继续", "continue"},
+        {"返回", "return"}, {"生成", "yield"},
+        {"函数", "def"}, {"类", "class"}, {"匿名", "lambda"},
+        {"尝试", "try"}, {"捕获", "except"}, {"最终", "finally"},
+        {"抛出", "raise"}, {"断言", "assert"},
+        {"使用", "with"}, {"命名为", "as"},
+        {"导入", "import"}, {"从", "from"},
+        {"删除", "del"}, {"占位", "pass"},
+        {"全局", "global"}, {"非局部", "nonlocal"},
+        {"属于", "in"}, {"是", "is"}, {"并且", "and"}, {"或者", "or"}, {"不", "not"},
+        {"异步", "async"}, {"等候", "await"},
+        {"真", "True"}, {"假", "False"}, {"空", "None"},
+        {NULL, NULL}
+    };
+    if (new_token->start != NULL) {
+        for (int zi = 0; zh_kw[zi][0] != NULL; zi++) {
+            size_t zlen = strlen(zh_kw[zi][0]);
+            if ((Py_ssize_t)zlen == name_len &&
+                memcmp(new_token->start, zh_kw[zi][0], zlen) == 0) {
+                const char *en = zh_kw[zi][1];
+                for (int i = 0; i < p->n_keyword_lists; i++) {
+                    for (KeywordToken *k = p->keywords[i]; k != NULL && k->type != -1; k++) {
+                        if (strcmp(k->str, en) == 0) {
+                            return k->type;
+                        }
+                    }
+                }
+                break;
             }
         }
     }
@@ -491,10 +531,15 @@ _PyPegen_expect_soft_keyword(Parser *p, const char *keyword)
         p->error_indicator = 1;
         return NULL;
     }
-    if (strcmp(s, keyword) != 0) {
-        return NULL;
+    if (strcmp(s, keyword) == 0) {
+        return _PyPegen_name_token(p);
     }
-    return _PyPegen_name_token(p);
+    /* 中文软关键字: 匹配=match, 情形=case */
+    if ((strcmp(keyword, "match") == 0 && strcmp(s, "匹配") == 0) ||
+        (strcmp(keyword, "case") == 0 && strcmp(s, "情形") == 0)) {
+        return _PyPegen_name_token(p);
+    }
+    return NULL;
 }
 
 Token *

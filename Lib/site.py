@@ -715,6 +715,11 @@ def main():
     execsitecustomize()
     if ENABLE_USER_SITE:
         execusercustomize()
+    # 中文内置别名自动加载(失败静默,不影响启动)
+    try:
+        import _zh_builtins  # noqa: F401
+    except Exception:
+        pass
 
 # Prevent extending of sys.path when python was started with -S and
 # site is imported later.

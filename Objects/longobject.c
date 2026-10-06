@@ -6444,6 +6444,21 @@ long_vectorcall(PyObject *type, PyObject * const*args,
     }
 }
 
+/* 中文别名文档(签名与英文一致, 名称为中文) */
+PyDoc_STRVAR(zh_alias_doc_615246_0,
+"位长度($self, /)\n--\n\n与 bit_length 相同。");
+PyDoc_STRVAR(zh_alias_doc_689493_1,
+"位计数($self, /)\n--\n\n与 bit_count 相同。");
+PyDoc_STRVAR(zh_alias_doc_111784_2,
+"转字节($self, /, length=1, byteorder=\'big\', *, signed=False)\n--\n\n与 to_bytes 相同。");
+PyDoc_STRVAR(zh_alias_doc_522419_3,
+"从字节($type, /, bytes, byteorder=\'big\', *, signed=False)\n--\n\n与 from_bytes 相同。");
+PyDoc_STRVAR(zh_alias_doc_197130_4,
+"整数比($self, /)\n--\n\n与 as_integer_ratio 相同。");
+PyDoc_STRVAR(zh_alias_doc_882695_5,
+"是整数($self, /)\n--\n\n与 is_integer 相同。");
+PyDoc_STRVAR(zh_alias_doc_407551_6,
+"共轭($self, /)\n--\n\n与  相同。");
 static PyMethodDef long_methods[] = {
     {"conjugate",       long_long_meth, METH_NOARGS,
      "Returns self, the complex conjugate of any int."},
@@ -6462,6 +6477,14 @@ static PyMethodDef long_methods[] = {
     INT___GETNEWARGS___METHODDEF
     INT___FORMAT___METHODDEF
     INT___SIZEOF___METHODDEF
+    /* 中文方法别名 */
+    {"位长度", (PyCFunction)int_bit_length, METH_NOARGS, zh_alias_doc_615246_0},
+    {"位计数", (PyCFunction)int_bit_count, METH_NOARGS, zh_alias_doc_689493_1},
+    {"转字节", _PyCFunction_CAST(int_to_bytes), METH_FASTCALL|METH_KEYWORDS, zh_alias_doc_111784_2},
+    {"从字节", _PyCFunction_CAST(int_from_bytes), METH_FASTCALL|METH_KEYWORDS|METH_CLASS, zh_alias_doc_522419_3},
+    {"整数比", (PyCFunction)int_as_integer_ratio, METH_NOARGS, zh_alias_doc_197130_4},
+    {"是整数", (PyCFunction)int_is_integer, METH_NOARGS, zh_alias_doc_882695_5},
+    {"共轭", long_long_meth, METH_NOARGS, zh_alias_doc_407551_6},
     INT_IS_INTEGER_METHODDEF
     {NULL,              NULL}           /* sentinel */
 };
