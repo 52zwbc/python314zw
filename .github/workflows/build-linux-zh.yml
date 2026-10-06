@@ -1,8 +1,8 @@
 name: Build Linux 中文版安装包
 
-# Linux x64 中文版绿色包，打包到 v3.14.8-zh7
+# Linux 中文版绿色包（x64 + arm64），打包到 v3.14.8-zh7
 # 触发：手动 workflow_dispatch（Release 已存在，直接追加附件）
-# 用户侧：下载 tar.gz + install.sh，sudo bash install.sh 即装好，无需编译
+# 用户侧：下载对应架构 tar.gz + install.sh，sudo bash install.sh 即装好，无需编译
 
 on:
   workflow_dispatch:
@@ -12,7 +12,14 @@ permissions:
 
 jobs:
   build-linux:
-    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        include:
+          - arch: x64
+            runner: ubuntu-22.04
+          - arch: arm64
+            runner: ubuntu-22.04-arm
+    runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v4
 
@@ -49,14 +56,19 @@ jobs:
 
       - name: 打包 tar.gz + 生成 install.sh
         run: |
-          tar czf python-3.14.8-linux-x64-zh.tar.gz -C staging opt
-          ls -la python-3.14.8-linux-x64-zh.tar.gz
+          PKG=python-3.14.8-linux-${{ matrix.arch }}-zh.tar.gz
+          tar czf $PKG -C staging opt
+          ls -la $PKG
           cat > install.sh << 'EOF'
           #!/bin/bash
-          # 中文 Python 3.14 (Linux x64) 一键安装：sudo bash install.sh
+          # 中文 Python 3.14 (Linux) 一键安装：sudo bash install.sh（自动识别 x64/arm64）
           set -e
           cd "$(dirname "$0")"
-          tar xzf python-3.14.8-linux-x64-zh.tar.gz -C /
+          ARCH=$(uname -m)
+          if [ "$ARCH" = "x86_64" ]; then PKG=python-3.14.8-linux-x64-zh.tar.gz
+          elif [ "$ARCH" = "aarch64" ]; then PKG=python-3.14.8-linux-arm64-zh.tar.gz
+          else echo "不支持的架构: $ARCH"; exit 1; fi
+          tar xzf "$PKG" -C /
           ln -sf /opt/python314zw/bin/python3 /usr/local/bin/python3
           ln -sf /opt/python314zw/bin/pip3 /usr/local/bin/pip3
           python3 --version
@@ -67,13 +79,13 @@ jobs:
       - name: Upload installer artifact
         uses: actions/upload-artifact@v4
         with:
-          name: python314zw-linux-x64-zh
+          name: python314zw-linux-${{ matrix.arch }}-zh
           path: |
-            python-3.14.8-linux-x64-zh.tar.gz
+            python-3.14.8-linux-${{ matrix.arch }}-zh.tar.gz
             install.sh
 
       - name: 追加到v3.14.8-zh7 Release
-        run: gh release upload v3.14.8-zh7 python-3.14.8-linux-x64-zh.tar.gz install.sh --clobber
+        run: gh release upload v3.14.8-zh7 python-3.14.8-linux-${{ matrix.arch }}-zh.tar.gz install.sh --clobber
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
