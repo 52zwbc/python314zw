@@ -1,0 +1,76 @@
+name: Build Linux 中文版安装包
+
+# Linux x64 中文版绿色包，打包到 v3.14.8-zh7
+# 触发：手动 workflow_dispatch（Release 已存在，直接追加附件）
+# 用户侧：下载 tar.gz + install.sh，sudo bash install.sh 即装好，无需编译
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装构建依赖
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential pkg-config \
+            libssl-dev zlib1g-dev libbz2-dev libffi-dev \
+            libreadline-dev libsqlite3-dev libncurses-dev \
+            liblzma-dev libgdbm-dev libgdbm-compat-dev \
+            tk-dev uuid-dev xz-utils
+
+      - name: 配置+编译+装到 staging
+        run: |
+          ./configure --prefix=/opt/python314zw --enable-optimizations --with-ensurepip=install
+          make -j$(nproc)
+          make install DESTDIR=$(pwd)/staging
+
+      - name: 中文冒烟测试
+        run: |
+          PY=$(pwd)/staging/opt/python314zw/bin/python3
+          $PY --version
+          $PY -c "打印('hello-zh')"
+          $PY test_zh.py
+          echo '打印("banner-ok")' > banner_check.py
+          $PY banner_check.py > banner_out.txt
+          cat banner_out.txt
+          grep "52zwbc.com" banner_out.txt
+        env:
+          PYTHONIOENCODING: utf-8
+
+      - name: 打包 tar.gz + 生成 install.sh
+        run: |
+          tar czf python-3.14.8-linux-x64-zh.tar.gz -C staging opt
+          ls -la python-3.14.8-linux-x64-zh.tar.gz
+          cat > install.sh << 'EOF'
+          #!/bin/bash
+          # 中文 Python 3.14 (Linux x64) 一键安装：sudo bash install.sh
+          set -e
+          cd "$(dirname "$0")"
+          tar xzf python-3.14.8-linux-x64-zh.tar.gz -C /
+          ln -sf /opt/python314zw/bin/python3 /usr/local/bin/zwpython
+          ln -sf /opt/python314zw/bin/pip3 /usr/local/bin/zwpip
+          zwpython --version
+          zwpython -c "打印('安装成功')"
+          EOF
+          chmod +x install.sh
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: python314zw-linux-x64-zh
+          path: |
+            python-3.14.8-linux-x64-zh.tar.gz
+            install.sh
+
+      - name: 追加到v3.14.8-zh7 Release
+        run: gh release upload v3.14.8-zh7 python-3.14.8-linux-x64-zh.tar.gz install.sh --clobber
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
