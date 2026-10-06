@@ -27,7 +27,10 @@ jobs:
 
       - name: 配置+编译+装到 staging
         run: |
-          ./configure --prefix=/opt/python314zw --enable-optimizations --with-ensurepip=install
+          # 注：不用 --enable-optimizations(PGO)：PGO 的 profile-run 要求官方测试集全过，
+          # 而中文别名会让 test_pickle 兼容映射/test_collections 协议等枚举类用例失败
+          # （fork 已知状态，同上游 Tests job 变红原因；Win/mac 包同样是非 PGO 构建）。
+          ./configure --prefix=/opt/python314zw --with-ensurepip=install
           make -j$(nproc)
           make install DESTDIR=$(pwd)/staging
 
