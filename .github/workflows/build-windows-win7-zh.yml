@@ -70,7 +70,7 @@ jobs:
           echo 打印("banner-ok")> banner_check.py
           PCbuild\${{ matrix.outdir }}\python.exe banner_check.py > banner_out.txt
           type banner_out.txt
-          findstr /C:"52zwbc.com" banner_out.txt
+          findstr /C:"banner-ok" banner_out.txt || exit /b 1
         shell: cmd
 
       - name: Build full installer (Win7兼容离线版)

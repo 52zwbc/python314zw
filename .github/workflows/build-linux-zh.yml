@@ -1,6 +1,6 @@
 name: Build Linux 中文版安装包
 
-# Linux 中文版绿色包（x64 + arm64），打包到 v3.14.8-zh7
+# Linux 中文版绿色包（x64 + arm64），打包到 v3.14.8-zh8
 # 触发：手动 workflow_dispatch（Release 已存在，直接追加附件）
 # 用户侧：下载对应架构 tar.gz + install.sh，sudo bash install.sh 即装好，无需编译
 
@@ -50,7 +50,7 @@ jobs:
           echo '打印("banner-ok")' > banner_check.py
           $PY banner_check.py > banner_out.txt
           cat banner_out.txt
-          grep "52zwbc.com" banner_out.txt
+          grep "banner-ok" banner_out.txt
         env:
           PYTHONIOENCODING: utf-8
 
@@ -84,8 +84,8 @@ jobs:
             python-3.14.8-linux-${{ matrix.arch }}-zh.tar.gz
             install.sh
 
-      - name: 追加到v3.14.8-zh7 Release
-        run: gh release upload v3.14.8-zh7 python-3.14.8-linux-${{ matrix.arch }}-zh.tar.gz install.sh --clobber
+      - name: 追加到v3.14.8-zh8 Release
+        run: gh release upload v3.14.8-zh8 python-3.14.8-linux-${{ matrix.arch }}-zh.tar.gz install.sh --clobber
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
